@@ -1,0 +1,36 @@
+{
+  "name": "beebaby-crm",
+  "version": "1.0.0",
+  "private": true,
+  "dependencies": {
+    "@emailjs/browser": "^4.3.2",
+    "ajv": "^8.20.0",
+    "ajv-keywords": "^5.1.0",
+    "date-fns": "^3.6.0",
+    "firebase": "^10.7.0",
+    "lucide-react": "^0.383.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-scripts": "5.0.1",
+    "recharts": "^2.10.0",
+    "resend": "^6.12.4"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "CI=false react-scripts build"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version"
+    ]
+  },
+  "engines": {
+    "node": "18"
+  }
+}
