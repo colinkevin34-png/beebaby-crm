@@ -1,6 +1,3 @@
-// Netlify Function : /.netlify/functions/send-email
-// Appelée depuis le browser pour envoyer via Resend (CORS safe)
-
 const { Resend } = require('resend');
 
 exports.handler = async (event) => {
@@ -10,20 +7,12 @@ exports.handler = async (event) => {
     'Content-Type': 'application/json',
   };
 
-  if (event.httpMethod === 'OPTIONS') {
-    return { statusCode: 200, headers, body: '' };
-  }
-
-  if (event.httpMethod !== 'POST') {
-    return { statusCode: 405, headers, body: JSON.stringify({ error: 'Method not allowed' }) };
-  }
+  if (event.httpMethod === 'OPTIONS') return { statusCode: 200, headers, body: '' };
+  if (event.httpMethod !== 'POST') return { statusCode: 405, headers, body: JSON.stringify({ error: 'Method not allowed' }) };
 
   try {
-    const { apiKey, from, to, subject, html, text, emailId, tags } = JSON.parse(event.body);
-
-    if (!apiKey || !to || !subject) {
-      return { statusCode: 400, headers, body: JSON.stringify({ error: 'Missing required fields' }) };
-    }
+    const { apiKey, from, to, subject, html, text, emailId } = JSON.parse(event.body);
+    if (!apiKey || !to || !subject) return { statusCode: 400, headers, body: JSON.stringify({ error: 'Missing fields' }) };
 
     const resend = new Resend(apiKey);
 
@@ -33,17 +22,11 @@ exports.handler = async (event) => {
       subject,
       html,
       text,
-      tags,
-      // Tracking natif Resend
-      headers: {
-        'X-Email-Id': emailId || 'crm-' + Date.now(),
-      },
+      reply_to: 'beebaby.microcreche@gmail.com',
+      tags: [{ name: 'emailId', value: emailId || 'crm-' + Date.now() }],
     });
 
-    if (error) {
-      return { statusCode: 400, headers, body: JSON.stringify({ error: error.message }) };
-    }
-
+    if (error) return { statusCode: 400, headers, body: JSON.stringify({ error: error.message }) };
     return { statusCode: 200, headers, body: JSON.stringify({ id: data.id, ok: true }) };
 
   } catch (err) {
