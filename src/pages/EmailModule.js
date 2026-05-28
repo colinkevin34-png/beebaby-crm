@@ -132,10 +132,8 @@ Objet ≤60 chars. Corps 150-220 mots, signe avec "${FROM_NAME}".`;
   ];
 
   const providerStatus = RESEND_READY
-    ? { color: 'var(--green)', icon: '✅', label: `Resend actif ✦ tracking ouverture & clic activé` }
-    : EMAILJS_READY
-    ? { color: 'var(--orange)', icon: '⚠', label: `EmailJS actif (sans tracking) — configurez Resend pour le tracking` }
-    : { color: 'var(--red)', icon: '❌', label: 'Aucun service email configuré' };
+    ? { color: 'var(--green)', icon: '✅', label: `Envoi depuis ${FROM_EMAIL} ✦ tracking activé` }
+    : { color: 'var(--orange)', icon: '⚠', label: `Envoi depuis ${FROM_EMAIL} (sans tracking)` };
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
